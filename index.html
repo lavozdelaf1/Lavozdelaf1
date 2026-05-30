@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álvaro San Martín | La Voz de la F1</title>
+<meta name="description" content="Periodista argentino especializado en Fórmula 1, Turismo Carretera y automovilismo. Sin vueltas, bueno, algunas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --red: #E8002D; --white: #F0EDE8; --black: #0A0A0A; --gray: #1A1A1A; --gray2: #2A2A2A; --text-muted: #888; }
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'Rajdhani', sans-serif; font-weight: 500; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(10,10,10,0.92); border-bottom: 1px solid #222; backdrop-filter: blur(8px); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 2px; color: var(--white); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--red); }
+.nav-cta { background: var(--red); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.5rem 1.2rem; border: none; cursor: pointer; text-decoration: none; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; padding-top: 64px; }
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 4rem 3rem 4rem 2.5rem; position: relative; z-index: 2; background: var(--black); }
+.hero-stripe { position: absolute; left: 0; top: 20%; width: 4px; height: 60%; background: var(--red); }
+.hero-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+.hero-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--red); }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: 2px; color: var(--white); margin-bottom: 0.5rem; }
+.hero-title .accent { color: var(--red); }
+.hero-sub { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.2rem, 2.5vw, 2rem); letter-spacing: 4px; color: var(--text-muted); margin-bottom: 2rem; }
+.hero-desc { font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 500; color: #aaa; line-height: 1.6; max-width: 420px; margin-bottom: 2.5rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { background: var(--red); color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.85rem 2rem; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn-outline { background: transparent; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.85rem 2rem; border: 1px solid #444; cursor: pointer; text-decoration: none; display: inline-block; }
+.hero-right { position: relative; overflow: hidden; background: #111; }
+.hero-right::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 80px; background: linear-gradient(to right, var(--black), transparent); z-index: 2; }
+.hero-right::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--black), transparent); z-index: 2; }
+.hero-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(20%) contrast(1.05); }
+.hero-formula-badge { position: absolute; bottom: 3rem; left: 2rem; z-index: 3; background: var(--red); padding: 0.5rem 1rem; }
+.hero-formula-badge span { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 3px; color: var(--white); }
+.stats-bar { background: var(--gray); border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 1.5rem 2.5rem; display: flex; }
+.stat-item { flex: 1; text-align: center; padding: 0.5rem 1rem; border-right: 1px solid #2a2a2a; }
+.stat-item:last-child { border-right: none; }
+.stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--red); letter-spacing: 2px; line-height: 1; }
+.stat-label { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+section { padding: 5rem 2.5rem; }
+.section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+.section-num { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: #1e1e1e; line-height: 1; user-select: none; }
+.section-tag { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 2px; color: var(--white); line-height: 1; }
+.divider { height: 1px; background: #1a1a1a; }
+.videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a1a; border: 1px solid #1a1a1a; margin-bottom: 2rem; }
+.video-card { background: var(--black); position: relative; overflow: hidden; cursor: pointer; transition: background 0.2s; }
+.video-card:hover { background: #0f0f0f; }
+.video-thumb { aspect-ratio: 9/16; background: var(--gray); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.video-card:hover .video-thumb img { transform: scale(1.05); }
+.video-thumb-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
+.video-card:hover .video-thumb-overlay { background: rgba(0,0,0,0.15); }
+.video-thumb-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; height: 100%; }
+.play-btn { width: 52px; height: 52px; border: 2px solid rgba(255,255,255,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); }
+.play-btn::after { content: ''; border-left: 18px solid rgba(255,255,255,0.9); border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+.video-card:hover .play-btn { border-color: var(--red); }
+.platform-badge { position: absolute; top: 10px; left: 10px; background: var(--red); font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; color: white; z-index: 2; }
+.delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); border: 1px solid #444; color: #888; font-size: 0.7rem; padding: 3px 7px; cursor: pointer; font-family: 'Rajdhani', sans-serif; z-index: 3; display: none; }
+.video-card:hover .delete-btn.visible { display: block; }
+.delete-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+.video-info { padding: 1rem 1.25rem 1.25rem; }
+.video-title { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); line-height: 1.3; margin-bottom: 6px; }
+.video-date { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); }
+.video-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--red); transition: height 0.3s; z-index: 2; }
+.video-card:hover::before { height: 100%; }
+.admin-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; cursor: pointer; width: fit-content; }
+.admin-toggle-label { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.admin-toggle-label:hover { color: var(--white); }
+.admin-panel { background: var(--gray); border: 1px solid #2a2a2a; border-left: 3px solid var(--red); padding: 1.5rem; margin-bottom: 2rem; display: none; }
+.admin-panel.open { display: block; }
+.admin-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 2px; color: var(--red); margin-bottom: 1rem; }
+.admin-form { display: flex; flex-direction: column; gap: 0.75rem; }
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.admin-input { background: var(--black); border: 1px solid #333; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 500; padding: 0.75rem 1rem; outline: none; width: 100%; }
+.admin-input::placeholder { color: #444; font-size: 0.85rem; }
+.admin-select { background: var(--black); border: 1px solid #333; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; padding: 0.75rem 1rem; outline: none; width: 100%; cursor: pointer; }
+.admin-file-label { display: flex; align-items: center; gap: 10px; background: var(--black); border: 1px dashed #444; color: #666; font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 0.75rem 1rem; cursor: pointer; }
+.admin-file-label input { display: none; }
+.thumb-preview { width: 60px; height: 80px; object-fit: cover; border: 1px solid #333; display: none; }
+.admin-btn { background: var(--red); color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.75rem 1.5rem; border: none; cursor: pointer; align-self: flex-start; }
+.admin-note { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); line-height: 1.5; }
+.pass-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; }
+.pass-modal.open { display: flex; }
+.pass-box { background: var(--gray); border: 1px solid #333; border-left: 4px solid var(--red); padding: 2rem; width: 320px; }
+.pass-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: var(--red); margin-bottom: 1rem; }
+.pass-box input { width: 100%; background: var(--black); border: 1px solid #333; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; padding: 0.75rem 1rem; outline: none; margin-bottom: 0.75rem; }
+.pass-btns { display: flex; gap: 0.75rem; }
+.pass-error { color: var(--red); font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; display: none; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.about-text { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 500; color: #aaa; line-height: 1.7; }
+.about-text p { margin-bottom: 1rem; }
+.about-text strong { color: var(--white); font-weight: 700; }
+.about-photo-wrap { position: relative; overflow: hidden; }
+.about-photo-wrap::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--red); z-index: 1; }
+.about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.05); }
+.tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
+.tag { background: var(--gray); border: 1px solid #333; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; color: var(--text-muted); }
+.tag.hot { border-color: var(--red); color: var(--red); }
+.content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a1a; border: 1px solid #1a1a1a; }
+.content-card { background: var(--black); padding: 2rem; position: relative; overflow: hidden; cursor: pointer; transition: background 0.2s; }
+.content-card:hover { background: #111; }
+.content-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--red); transition: height 0.3s; }
+.content-card:hover::before { height: 100%; }
+.card-platform { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+.card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; color: var(--white); margin-bottom: 0.5rem; line-height: 1.1; }
+.card-desc { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; }
+.card-stat { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--white); letter-spacing: 1px; }
+.card-stat-label { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.sponsor-section { background: var(--gray); border-top: 1px solid #222; border-bottom: 1px solid #222; }
+.sponsor-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.sponsor-title { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; letter-spacing: 2px; line-height: 1; margin-bottom: 1rem; }
+.sponsor-title span { color: var(--red); }
+.sponsor-desc { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 500; color: #aaa; line-height: 1.7; margin-bottom: 2rem; }
+.sponsor-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+.sponsor-features li { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 600; color: #aaa; display: flex; align-items: center; gap: 10px; }
+.sponsor-features li::before { content: ''; display: block; width: 20px; height: 1px; background: var(--red); flex-shrink: 0; }
+.sponsor-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #2a2a2a; border: 1px solid #2a2a2a; }
+.sponsor-metric { background: var(--gray2); padding: 1.5rem; }
+.sponsor-metric-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--red); letter-spacing: 1px; line-height: 1; }
+.sponsor-metric-label { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.contact-title { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 2px; line-height: 1; margin-bottom: 1rem; }
+.contact-title span { color: var(--red); }
+.contact-desc { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 500; color: #aaa; line-height: 1.7; margin-bottom: 2rem; }
+.social-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.social-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--gray); border: 1px solid #222; text-decoration: none; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; transition: border-color 0.2s; }
+.social-link:hover { border-color: var(--red); }
+.social-icon { width: 20px; height: 20px; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-family: 'Bebas Neue', sans-serif; flex-shrink: 0; }
+.social-count { margin-left: auto; color: var(--text-muted); font-size: 0.85rem; }
+.contact-form { display: flex; flex-direction: column; gap: 1px; background: #1a1a1a; border: 1px solid #1a1a1a; }
+.contact-form input, .contact-form textarea { width: 100%; background: var(--black); border: none; color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500; padding: 1.25rem 1.5rem; outline: none; resize: none; }
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: #444; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; font-weight: 600; }
+.form-submit { background: var(--red); color: var(--white); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 1.25rem 2rem; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.ticker { background: var(--red); padding: 0.5rem 0; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-flex; gap: 4rem; animation: ticker 20s linear infinite; }
+.ticker-item { font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,0.9); text-transform: uppercase; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+footer { background: #050505; border-top: 1px solid #1a1a1a; padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 3px; color: var(--text-muted); }
+.footer-logo span { color: var(--red); }
+.footer-copy { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #333; }
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,10,10,0.97); border-bottom: 1px solid #222; padding: 1.5rem; flex-direction: column; gap: 1.5rem; z-index: 99; }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); text-decoration: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { height: 70vw; }
+  .stats-bar { flex-wrap: wrap; padding: 1rem; }
+  .stat-item { flex: 1 1 50%; border-bottom: 1px solid #222; }
+  section { padding: 3rem 1.5rem; }
+  .about-grid, .sponsor-inner, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .content-grid, .videos-grid { grid-template-columns: 1fr; }
+  .admin-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="pass-modal" id="passModal">
+  <div class="pass-box">
+    <h3>Acceso admin</h3>
+    <p class="pass-error" id="passError">Contraseña incorrecta</p>
+    <input type="password" id="passInput" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkPass()">
+    <div class="pass-btns">
+      <button class="admin-btn" onclick="checkPass()">Entrar</button>
+      <button class="admin-btn" style="background:#333" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#inicio" class="nav-logo">ASM <span>|</span> La Voz de la F1</a>
+  <ul class="nav-links">
+    <li><a href="#latest">Últimos videos</a></li>
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#content">Contenido</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Trabajemos juntos</a>
+  <button class="nav-hamburger" onclick="document.getElementById('navMobile').classList.toggle('open')" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#latest" onclick="document.getElementById('navMobile').classList.remove('open')">Últimos videos</a>
+  <a href="#about" onclick="document.getElementById('navMobile').classList.remove('open')">Sobre mí</a>
+  <a href="#content" onclick="document.getElementById('navMobile').classList.remove('open')">Contenido</a>
+  <a href="#sponsors" onclick="document.getElementById('navMobile').classList.remove('open')">Sponsors</a>
+  <a href="#contact" onclick="document.getElementById('navMobile').classList.remove('open')">Contacto</a>
+</div>
+
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-stripe"></div>
+    <div class="hero-tag">Periodista · F1 · Automovilismo</div>
+    <h1 class="hero-title">ÁLVARO<br><span class="accent">SAN</span><br>MARTÍN</h1>
+    <p class="hero-sub">La Voz de la F1</p>
+    <p class="hero-desc">Sin vueltas, bueno, algunas.</p>
+    <div class="hero-btns">
+      <a href="#latest" class="btn-primary">Ver últimos videos</a>
+      <a href="#contact" class="btn-outline">Contacto para marcas</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-photo" src="IMG_2636.jpeg" alt="Álvaro San Martín - La Voz de la F1">
+    <div class="hero-formula-badge"><span>ESPN · On Set</span></div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">F1 · Automovilismo · Análisis · Opinión · Radio · TikTok · Instagram · Argentina · Turismo Carretera · Cars</span>
+    <span class="ticker-item">F1 · Automovilismo · Análisis · Opinión · Radio · TikTok · Instagram · Argentina · Turismo Carretera · Cars</span>
+    <span class="ticker-item">F1 · Automovilismo · Análisis · Opinión · Radio · TikTok · Instagram · Argentina · Turismo Carretera · Cars</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-number">16.2K</div><div class="stat-label">Seguidores TikTok</div></div>
+  <div class="stat-item"><div class="stat-number">285.6K</div><div class="stat-label">Likes TikTok</div></div>
+  <div class="stat-item"><div class="stat-number">1K+</div><div class="stat-label">Seguidores IG</div></div>
+  <div class="stat-item"><div class="stat-number">Radio</div><div class="stat-label">Presencia on-air</div></div>
+</div>
+
+<div class="divider"></div>
+
+<section id="latest">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div><div class="section-tag">Contenido reciente</div><div class="section-title">Últimos videos</div></div>
+  </div>
+  <div class="admin-toggle" onclick="openAdminPanel()">
+    <div class="admin-toggle-label">+ Agregar video</div>
+  </div>
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-title">Agregar nuevo video</div>
+    <div class="admin-form">
+      <div class="admin-row">
+        <input class="admin-input" id="videoTitle" placeholder="Título del video">
+        <select class="admin-select" id="videoPlatform">
+          <option value="TikTok">TikTok</option>
+          <option value="Instagram">Instagram</option>
+          <option value="YouTube">YouTube</option>
+        </select>
+      </div>
+      <input class="admin-input" id="videoUrl" placeholder="Link del video">
+      <input class="admin-input" id="videoDate" placeholder="Fecha (ej: 29 Mayo 2026)">
+      <label class="admin-file-label">
+        <span id="fileLabel">📷 Subir miniatura</span>
+        <input type="file" id="videoThumb" accept="image/*" onchange="previewThumb(this)">
+      </label>
+      <img id="thumbPreview" class="thumb-preview">
+      <button class="admin-btn" onclick="addVideo()">Publicar video</button>
+      <p class="admin-note">Solo vos podés agregar videos. Los cambios se guardan en este navegador.</p>
+    </div>
+  </div>
+  <div class="videos-grid" id="videosGrid"></div>
+  <div style="text-align:center; margin-top: 1.5rem;">
+    <a href="https://www.tiktok.com/@lavozdelaf1" target="_blank" class="btn-outline" style="font-size:0.9rem;">Ver todos en TikTok →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="about">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div><div class="section-tag">Sobre mí</div><div class="section-title">La historia</div></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <div class="about-text">
+        <p>Soy <strong>Álvaro San Martín</strong>, periodista argentino con foco en <strong>Fórmula 1, Turismo Carretera y automovilismo en general</strong>. Cuento el motor como lo que es: velocidad, estrategia, drama y pasión.</p>
+        <p>Mi contenido combina análisis técnico con un formato directo pensado para las redes. Desde las decisiones en el pit wall hasta la política entre equipos — voy al hueso.</p>
+        <p>Además de mis redes, tengo <strong>presencia en radio</strong> donde llevo el automovilismo a una audiencia más amplia.</p>
+      </div>
+      <div class="tags">
+        <span class="tag hot">F1</span><span class="tag hot">Turismo Carretera</span><span class="tag hot">Cars</span>
+        <span class="tag">Radio</span><span class="tag">TikTok</span><span class="tag">Instagram</span><span class="tag">Argentina</span>
+      </div>
+    </div>
+    <div class="about-photo-wrap">
+      <img class="about-photo" src="IMG_2636.jpeg" alt="Álvaro San Martín en ESPN">
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="content">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div><div class="section-tag">Plataformas</div><div class="section-title">Mi contenido</div></div>
+  </div>
+  <div class="content-grid">
+    <div class="content-card" onclick="window.open('https://www.tiktok.com/@lavozdelaf1','_blank')">
+      <div class="card-platform">TikTok · Principal</div>
+      <div class="card-title">F1 · Turismo Carretera · Cars</div>
+      <div class="card-desc">Análisis rápidos, breaking news y opinión. Playlists por categoría.</div>
+      <div class="card-stat">16.2K</div><div class="card-stat-label">Seguidores · 285.6K likes</div>
+    </div>
+    <div class="content-card" onclick="window.open('https://www.instagram.com/lavozdelaf1','_blank')">
+      <div class="card-platform">Instagram · Reels</div>
+      <div class="card-title">Talking heads & análisis</div>
+      <div class="card-desc">Contenido audiovisual con cara visible y cobertura del paddock.</div>
+      <div class="card-stat">1051</div><div class="card-stat-label">Seguidores · @lavozdelaf1</div>
+    </div>
+    <div class="content-card">
+      <div class="card-platform">Radio · On-air</div>
+      <div class="card-title">Periodismo tradicional</div>
+      <div class="card-desc">El automovilismo en formato clásico para una audiencia más amplia.</div>
+      <div class="card-stat">Live</div><div class="card-stat-label">Presencia on-air</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="sponsors" class="sponsor-section">
+  <div class="sponsor-inner">
+    <div>
+      <h2 class="sponsor-title">TU MARCA<br>EN <span>PRIMERA</span><br>FILA</h2>
+      <p class="sponsor-desc">Conectá tu marca con una audiencia apasionada por el motor. Sponsorships, menciones y contenido patrocinado.</p>
+      <ul class="sponsor-features">
+        <li>Audiencia segmentada: F1, TC, autos, motorsport</li>
+        <li>Presencia multiplataforma: TikTok, IG, Radio</li>
+        <li>+285K likes acumulados en TikTok</li>
+        <li>Integración natural de marca en contenido editorial</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Hablemos</a>
+    </div>
+    <div class="sponsor-metrics">
+      <div class="sponsor-metric"><div class="sponsor-metric-num">16.2K</div><div class="sponsor-metric-label">TikTok followers</div></div>
+      <div class="sponsor-metric"><div class="sponsor-metric-num">285K</div><div class="sponsor-metric-label">Total likes</div></div>
+      <div class="sponsor-metric"><div class="sponsor-metric-num">3K+</div><div class="sponsor-metric-label">Views por video</div></div>
+      <div class="sponsor-metric"><div class="sponsor-metric-num">3</div><div class="sponsor-metric-label">Plataformas activas</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div><div class="section-tag">Contacto</div><div class="section-title">Hablemos</div></div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <h2 class="contact-title">¿TENÉS<br>UNA <span>IDEA</span>?</h2>
+      <p class="contact-desc">Sponsors, colaboraciones, apariciones en medios o simplemente hablar de motor. Estoy disponible.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/lavozdelaf1" target="_blank" class="social-link"><div class="social-icon">IG</div>Instagram<span class="social-count">@lavozdelaf1</span></a>
+        <a href="https://www.tiktok.com/@lavozdelaf1" target="_blank" class="social-link"><div class="social-icon">TT</div>TikTok<span class="social-count">@lavozdelaf1</span></a>
+        <a href="#" class="social-link"><div class="social-icon">FM</div>Radio<span class="social-count">On-air</span></a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <input type="text" id="formNombre" placeholder="Tu nombre">
+      <input type="email" id="formEmail" placeholder="Tu email">
+      <input type="text" id="formEmpresa" placeholder="Empresa / Marca (opcional)">
+      <textarea rows="4" id="formMensaje" placeholder="¿Qué tenés en mente?"></textarea>
+      <button class="form-submit" onclick="enviarFormulario()">Enviar mensaje <span>→</span></button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">ASM <span>|</span> La Voz de la F1</div>
+  <div class="footer-copy">© 2026 Álvaro San Martín · Argentina</div>
+</footer>
+
+<script>
+const PASSWORD = 'Alvaro44!';
+const STORAGE_KEY = 'asm_videos_v3';
+let isAdmin = false;
+let pendingThumb = '';
+
+function openAdminPanel() {
+  if (isAdmin) {
+    document.getElementById('adminPanel').classList.toggle('open');
+  } else {
+    document.getElementById('passModal').classList.add('open');
+    setTimeout(() => document.getElementById('passInput').focus(), 100);
+  }
+}
+
+function checkPass() {
+  const val = document.getElementById('passInput').value;
+  if (val === PASSWORD) {
+    isAdmin = true;
+    closeModal();
+    document.getElementById('adminPanel').classList.add('open');
+    renderVideos();
+  } else {
+    document.getElementById('passError').style.display = 'block';
+    document.getElementById('passInput').value = '';
+  }
+}
+
+function closeModal() {
+  document.getElementById('passModal').classList.remove('open');
+  document.getElementById('passInput').value = '';
+  document.getElementById('passError').style.display = 'none';
+}
+
+function previewThumb(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingThumb = e.target.result;
+    const preview = document.getElementById('thumbPreview');
+    preview.src = pendingThumb;
+    preview.style.display = 'block';
+    document.getElementById('fileLabel').textContent = '✓ ' + file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+function getPlatformColor(p) {
+  if (p === 'YouTube') return '#FF0000';
+  if (p === 'Instagram') return '#E1306C';
+  return '#E8002D';
+}
+
+function loadVideos() {
+  try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : []; } catch(e) { return []; }
+}
+
+function saveVideos(v) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(v)); } catch(e) {} }
+
+function renderVideos() {
+  const videos = loadVideos();
+  const grid = document.getElementById('videosGrid');
+  grid.innerHTML = '';
+  if (videos.length === 0) {
+    grid.innerHTML = '<div style="padding:3rem;text-align:center;color:#444;font-family:Rajdhani,sans-serif;font-size:1rem;letter-spacing:2px;text-transform:uppercase;grid-column:1/-1">Próximamente...</div>';
+    return;
+  }
+  videos.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    const thumbHtml = v.thumb ? '<img src="' + v.thumb + '" alt="' + v.title + '">' : '<div class="video-thumb-placeholder"><div class="play-btn"></div></div>';
+    const color = getPlatformColor(v.platform);
+    const deleteBtn = isAdmin ? '<button class="delete-btn visible" onclick="event.stopPropagation();deleteVideo(' + i + ')">✕ Borrar</button>' : '';
+    card.innerHTML = '<div class="video-thumb">' + thumbHtml + '<div class="video-thumb-overlay"><div class="play-btn"></div></div><div class="platform-badge" style="background:' + color + '">' + v.platform + '</div>' + deleteBtn + '</div><div class="video-info"><div class="video-title">' + v.title + '</div><div class="video-date">' + v.date + '</div></div>';
+    card.onclick = () => window.open(v.url, '_blank');
+    grid.appendChild(card);
+  });
+}
+
+function addVideo() {
+  const title = document.getElementById('videoTitle').value.trim();
+  const url = document.getElementById('videoUrl').value.trim();
+  const date = document.getElementById('videoDate').value.trim();
+  const platform = document.getElementById('videoPlatform').value;
+  if (!title || !url) { alert('Ponele título y link al video'); return; }
+  const videos = loadVideos();
+  videos.unshift({ title, platform, url, date: date || 'Reciente', thumb: pendingThumb });
+  if (videos.length > 6) videos.pop();
+  saveVideos(videos);
+  renderVideos();
+  document.getElementById('videoTitle').value = '';
+  document.getElementById('videoUrl').value = '';
+  document.getElementById('videoDate').value = '';
+  document.getElementById('videoThumb').value = '';
+  document.getElementById('thumbPreview').style.display = 'none';
+  document.getElementById('fileLabel').textContent = '📷 Subir miniatura';
+  pendingThumb = '';
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function deleteVideo(index) {
+  if (!confirm('¿Borrar este video?')) return;
+  const videos = loadVideos();
+  videos.splice(index, 1);
+  saveVideos(videos);
+  renderVideos();
+}
+
+function enviarFormulario() {
+  const nombre = document.getElementById('formNombre').value.trim();
+  const email = document.getElementById('formEmail').value.trim();
+  const mensaje = document.getElementById('formMensaje').value.trim();
+  if (!nombre || !email || !mensaje) { alert('Completá nombre, email y mensaje'); return; }
+  const subject = encodeURIComponent('Contacto desde lavozdelaf1.info - ' + nombre);
+  const body = encodeURIComponent('Nombre: ' + nombre + '\nEmail: ' + email + '\n\n' + mensaje);
+  window.location.href = 'mailto:alvarosanmartinper@gmail.com?subject=' + subject + '&body=' + body;
+}
+
+renderVideos();
+</script>
+</body>
+</html>
