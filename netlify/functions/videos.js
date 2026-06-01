@@ -1,5 +1,5 @@
 const PASSWORD = "Alvaro44!";
-const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+const AIRTABLE_TOKEN = "pat4KtRJm3Rb2Okuh.7969d5593ab40284baaaa29b3cff4b9b6688b0a8840abbb216f2b573b11f04db";
 const BASE_ID = "appkIpcnX2PtgJRb1";
 const TABLE_ID = "tbl9IkS4hcq72wVFK";
 const API_URL = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
