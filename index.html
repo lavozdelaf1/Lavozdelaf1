@@ -383,6 +383,9 @@ footer { background: #050505; border-top: 1px solid #1a1a1a; padding: 2rem 2.5re
 
 <script>
 const PASSWORD = 'Alvaro44!';
+const AT_TOKEN = 'pat4KtRJm3Rb2Okuh.7969d5593ab40284baaaa29b3cff4b9b6688b0a8840abbb216f2b573b11f04db';
+const AT_URL = 'https://api.airtable.com/v0/appkIpcnX2PtgJRb1/tbl9IkS4hcq72wVFK';
+const AT_HEADERS = { 'Authorization': 'Bearer ' + AT_TOKEN, 'Content-Type': 'application/json' };
 let isAdmin = false;
 let pendingThumb = '';
 
@@ -459,8 +462,16 @@ function renderVideos(videos) {
 
 async function loadVideos() {
   try {
-    const r = await fetch('/.netlify/functions/videos');
-    const videos = await r.json();
+    const r = await fetch(AT_URL + '?maxRecords=6', { headers: AT_HEADERS });
+    const data = await r.json();
+    const videos = (data.records || []).map(rec => ({
+      id: rec.id,
+      title: rec.fields.title || '',
+      platform: rec.fields.platform || '',
+      url: rec.fields.url || '',
+      date: rec.fields.date || '',
+      thumb: rec.fields.thumb || ''
+    }));
     renderVideos(videos);
   } catch(e) {
     renderVideos([]);
@@ -507,13 +518,8 @@ async function addVideo() {
 async function deleteVideo(id) {
   if (!confirm('¿Borrar este video?')) return;
   try {
-    const r = await fetch('/.netlify/functions/videos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: PASSWORD, action: 'delete', id })
-    });
-    const data = await r.json();
-    if (data.ok) renderVideos(data.videos);
+    await fetch(AT_URL + '/' + id, { method: 'DELETE', headers: AT_HEADERS });
+    await loadVideos();
   } catch(e) { alert('Error al borrar.'); }
 }
 
