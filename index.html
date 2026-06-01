@@ -260,11 +260,7 @@ footer { background: #050505; border-top: 1px solid #1a1a1a; padding: 2rem 2.5re
       </div>
       <input class="admin-input" id="videoUrl" placeholder="Link del video">
       <input class="admin-input" id="videoDate" placeholder="Fecha (ej: 29 Mayo 2026)">
-      <label class="admin-file-label">
-        <span id="fileLabel">📷 Subir miniatura</span>
-        <input type="file" id="videoThumb" accept="image/*" onchange="previewThumb(this)">
-      </label>
-      <img id="thumbPreview" class="thumb-preview">
+      <input class="admin-input" id="videoThumb" placeholder="Link de miniatura (subila a Cloudinary y pegá el link)">
       <button class="admin-btn" onclick="addVideo()">Publicar video</button>
       <p class="admin-note" id="adminStatus">Los videos se guardan en el servidor y se ven en todos los dispositivos.</p>
     </div>
@@ -476,6 +472,7 @@ async function addVideo() {
   const url = document.getElementById('videoUrl').value.trim();
   const date = document.getElementById('videoDate').value.trim();
   const platform = document.getElementById('videoPlatform').value;
+  const thumb = document.getElementById('videoThumb').value.trim();
   if (!title || !url) { alert('Ponele título y link al video'); return; }
 
   const status = document.getElementById('adminStatus');
@@ -485,7 +482,7 @@ async function addVideo() {
     const r = await fetch('/.netlify/functions/videos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: PASSWORD, action: 'add', title, platform, url, date: date || 'Reciente', thumb: pendingThumb })
+      body: JSON.stringify({ password: PASSWORD, action: 'add', title, platform, url, date: date || 'Reciente', thumb })
     });
     const data = await r.json();
     if (data.ok) {
@@ -494,9 +491,9 @@ async function addVideo() {
       document.getElementById('videoUrl').value = '';
       document.getElementById('videoDate').value = '';
       document.getElementById('videoThumb').value = '';
-      document.getElementById('thumbPreview').style.display = 'none';
-      document.getElementById('fileLabel').textContent = '📷 Subir miniatura';
-      pendingThumb = '';
+      
+      
+
       document.getElementById('adminPanel').classList.remove('open');
       status.textContent = 'Video publicado!';
     } else {
