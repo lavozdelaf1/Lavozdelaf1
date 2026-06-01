@@ -23,9 +23,7 @@ exports.handler = async (event) => {
   // GET - traer videos
   if (event.httpMethod === "GET") {
     try {
-      const res = await fetch(`${API_URL}?sort[0][field]=order&sort[0][direction]=asc&maxRecords=6`, {
-        headers: headers_air
-      });
+      const res = await fetch(`${API_URL}?maxRecords=6`, { headers: headers_air });
       const data = await res.json();
       const videos = (data.records || []).map(r => ({
         id: r.id,
@@ -47,48 +45,11 @@ exports.handler = async (event) => {
       const body = JSON.parse(event.body);
 
       if (body.password !== PASSWORD) {
-        return { statusCode: 401, headers: headers_res, body: JSON.stringify({ error: "Contraseña incorrecta" }) };
+        return { statusCode: 401, headers: headers_res, body: JSON.stringify({ error: "Contrasena incorrecta" }) };
       }
 
       // Agregar video
       if (body.action === "add") {
-        // Contar cuántos hay para asignar orden
-        const countRes = await fetch(`${API_URL}?fields[]=title`, { headers: headers_air });
-        const countData = await countRes.json();
-        const count = (countData.records || []).length;
-
-        // Si hay 6 o más, borrar el más viejo
-        if (count >= 6) {
-          const oldRes = await fetch(`${API_URL}?sort[0][field]=order&sort[0][direction]=desc&maxRecords=1`, { headers: headers_air });
-          const oldData = await oldRes.json();
-          if (oldData.records && oldData.records.length > 0) {
-            await fetch(`${API_URL}/${oldData.records[0].id}`, {
-              method: "DELETE",
-              headers: headers_air
-            });
-          }
-        }
-
-        // Agregar nuevo con orden 0 (más reciente primero)
-        // Primero incrementar orden de todos
-        const allRes = await fetch(`${API_URL}?fields[]=order`, { headers: headers_air });
-        const allData = await allRes.json();
-        if (allData.records && allData.records.length > 0) {
-          const updates = allData.records.map(r => ({
-            id: r.id,
-            fields: { order: (r.fields.order || 0) + 1 }
-          }));
-          // Airtable permite max 10 por request
-          for (let i = 0; i < updates.length; i += 10) {
-            await fetch(API_URL, {
-              method: "PATCH",
-              headers: headers_air,
-              body: JSON.stringify({ records: updates.slice(i, i + 10) })
-            });
-          }
-        }
-
-        // Crear nuevo registro
         await fetch(API_URL, {
           method: "POST",
           headers: headers_air,
@@ -99,15 +60,13 @@ exports.handler = async (event) => {
                 platform: body.platform,
                 url: body.url,
                 date: body.date || "Reciente",
-                thumb: body.thumb || "",
-                order: 0
+                thumb: body.thumb || ""
               }
             }]
           })
         });
 
-        // Traer lista actualizada
-        const newRes = await fetch(`${API_URL}?sort[0][field]=order&sort[0][direction]=asc&maxRecords=6`, { headers: headers_air });
+        const newRes = await fetch(`${API_URL}?maxRecords=6`, { headers: headers_air });
         const newData = await newRes.json();
         const videos = (newData.records || []).map(r => ({
           id: r.id,
@@ -126,7 +85,7 @@ exports.handler = async (event) => {
           method: "DELETE",
           headers: headers_air
         });
-        const newRes = await fetch(`${API_URL}?sort[0][field]=order&sort[0][direction]=asc&maxRecords=6`, { headers: headers_air });
+        const newRes = await fetch(`${API_URL}?maxRecords=6`, { headers: headers_air });
         const newData = await newRes.json();
         const videos = (newData.records || []).map(r => ({
           id: r.id,
